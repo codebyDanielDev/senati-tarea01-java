@@ -6,7 +6,7 @@ public class Caso05_SeguroSalud {
         Locale.setDefault(Locale.US);
         Scanner lector = new Scanner(System.in);
 
-        System.out.print("Plan (B = básico, P = plus, F = full): ");
+        System.out.print("Plan (B = basico, P = plus, F = full): ");
         String plan = lector.next().toUpperCase();
 
         double coberturaConsulta;
@@ -14,6 +14,8 @@ public class Caso05_SeguroSalud {
         double coberturaHospital;
         double tope;
 
+        // Carga los porcentajes de cobertura y el tope maximo segun el plan
+        // Si el plan no existe, avisa y termina el programa
         switch (plan) {
             case "B":
                 coberturaConsulta = 60;
@@ -34,16 +36,18 @@ public class Caso05_SeguroSalud {
                 tope = 50000;
                 break;
             default:
-                System.out.println("Plan no válido");
+                System.out.println("Plan no valido");
                 return;
         }
 
-        System.out.print("Tipo de atención (C = consulta, E = emergencia, H = hospitalización): ");
+        System.out.print("Tipo de atencion (C = consulta, E = emergencia, H = hospitalizacion): ");
         String atencion = lector.next().toUpperCase();
 
         double porcentaje;
         double deducible;
 
+        // Elige el porcentaje de cobertura del plan y el deducible segun el tipo de atencion
+        // Si el tipo no existe, avisa y termina el programa
         switch (atencion) {
             case "C":
                 porcentaje = coberturaConsulta;
@@ -58,16 +62,18 @@ public class Caso05_SeguroSalud {
                 deducible = 200;
                 break;
             default:
-                System.out.println("Tipo de atención no válido");
+                System.out.println("Tipo de atencion no valido");
                 return;
         }
 
-        System.out.print("Monto de la atención: ");
+        System.out.print("Monto de la atencion: ");
         double monto = lector.nextDouble();
 
         double pagaAseguradora = 0;
+        // La aseguradora solo paga si el monto supera el deducible (si no, paga todo el paciente)
         if (monto > deducible) {
             pagaAseguradora = (monto - deducible) * porcentaje / 100;
+            // El pago de la aseguradora no puede pasar el tope del plan
             if (pagaAseguradora > tope) {
                 pagaAseguradora = tope;
             }
